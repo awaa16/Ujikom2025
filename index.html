@@ -154,4 +154,18 @@
     // Tambah tugas baru dengan status default: Belum Dikerjakan (false)
     await tambahtodolist(taskInput, priorityInput, dateInput, false);
   }
+  tampilkanTodolist();
+resetForm();
+}
+
+function editTask(button, docId) {
+  const row = $(button).closest('tr'); // Cari baris tabel terkait tombol
+  const nama = row.find('td:nth-child(1)').text(); // Ambil teks dari kolom pertama
+  const prioritas = row.find('td:nth-child(2)').text(); // Ambil teks dari kolom kedua
+  const tanggal = row.find('td:nth-child(4)').text(); // Ambil teks dari kolom keempat
+  const status = row.find('select.status').val(); // Ambil nilai dari dropdown status
   
+  if (!nama || !prioritas || !tanggal) {
+    alert('Data tugas tidak ditemukan atau tidak valid.');
+    return;
+  }
