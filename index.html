@@ -145,3 +145,13 @@
     alert('Masukkan Prioritas!');
     return;
   }
+  if (editMode) {
+
+    // Update existing task
+
+    await ubahtodolist(editDocId, taskInput, priorityInput, dateInput, false);
+  } else {
+    // Tambah tugas baru dengan status default: Belum Dikerjakan (false)
+    await tambahtodolist(taskInput, priorityInput, dateInput, false);
+  }
+  
