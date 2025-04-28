@@ -72,3 +72,6 @@ export async function updateStatus(docId, status) {
     console.error(`Gagal memperbarui status: ${error}`);
   }
 }
+// Fungsi untuk memperbarui seluruh data
+
+export async function ubahtodolist(docId, nama, prioritas, tanggal, status) 
