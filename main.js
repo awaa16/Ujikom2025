@@ -109,3 +109,11 @@ export async function ubahtodolist(docId, nama, prioritas, tanggal, status) {
     console.error(`Gagal memperbarui data: ${error}`);
   }
 }
+export async function ambiltodolist(docId) {
+
+  const docRef = doc(db, "todolist", docId);
+
+  const docSnap = await getDoc(docRef);
+
+  return docSnap.data();
+}
