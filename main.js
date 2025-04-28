@@ -110,10 +110,10 @@ export async function ubahtodolist(docId, nama, prioritas, tanggal, status) {
   }
 }
 export async function ambiltodolist(docId) {
-
+  
   const docRef = doc(db, "todolist", docId);
-
+  
   const docSnap = await getDoc(docRef);
-
+  
   return docSnap.data();
 }

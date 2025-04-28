@@ -95,31 +95,25 @@
     elemenStatus.value = status || 'Belum Dikerjakan';
     elemenPrioritas.value = prioritas || 'Sedang';
     elemenTanggal.value = tanggal || '';
-    
     tombolUbah.addEventListener('click', async function(e) {
       e.preventDefault();
-      
       // Validasi input
       if (!elemenTugas.value || !elemenTanggal.value) {
         alert('Semua field harus diisi!');
         return;
       }
-      
       // Ambil nilai status baru dari elemen input
       const statusInput = elemenStatus.value;
-      
       // Tetapkan status ke default jika tidak diubah
       let statusBaru = status; // Default ke status lama
       if (statusInput !== status && statusInput !== "") {
         statusBaru = statusInput; // Perbarui hanya jika diubah
       }
-      
       // Pastikan status tidak berubah otomatis ke "Selesai"
       if (status === "Belum Dikerjakan" && statusBaru === "Selesai") {
         alert("Status tidak dapat langsung diubah ke 'Selesai' dari 'Belum Dikerjakan'.");
         return;
       }
-      
       // Panggil fungsi ubah
       await ubahtodolist(
         docId,
