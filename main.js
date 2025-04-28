@@ -41,3 +41,19 @@ export async function ambildaftartodolist() {
         tanggal: dok.data().tanggal,
       });
     });
+    return hasil;
+}
+
+export async function tambahtodolist(nama, prioritas, tanggal, status = false) {
+  try {
+    const dokRef = await addDoc(collection(db, 'todolist'), {
+      nama: nama,
+      prioritas: prioritas,
+      tanggal: tanggal,
+      status: status // default ke false (Belum Dikerjakan)
+    });
+    console.log('Berhasil menambah todolist ' + dokRef.id);
+  } catch (e) {
+    console.log('Gagal menambah todolist ' + e);
+  }
+}
