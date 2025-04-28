@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import {
-
+  
   getFirestore,
   collection,
   addDoc,
@@ -21,3 +21,23 @@ const firebaseConfig = {
   appId: "1:332441427242:web:73c31309147ef1dab15253",
   measurementId: "G-JW04DZL85R"
 };
+// Inisialisasi Firebase
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+export async function ambildaftartodolist() {
+    const refDokumen = collection(db, "todolist");
+    const kueri = query(refDokumen, orderBy("nama"));
+    const cuplikanKueri = await getDocs(kueri);
+    let hasil = [];
+    cuplikanKueri.forEach((dok) => {
+      hasil.push({
+        id: dok.id,
+        nama: dok.data().nama,
+        prioritas: dok.data().prioritas,
+        status: dok.data().status,
+        tanggal: dok.data().tanggal,
+      });
+    });
