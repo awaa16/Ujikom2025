@@ -16,11 +16,11 @@
       text-align: center;
       padding: 20px;
     }
-
+    
     h1 {
       color: yellow;
     }
-
+    
     input,
     select {
       padding: 10px;
@@ -28,7 +28,7 @@
       border: none;
       border-radius: 5px;
     }
-
+    
     button {
       padding: 10px 15px;
       background-color: #ffcc00;
@@ -36,9 +36,40 @@
       border-radius: 5px;
       cursor: pointer;
     }
-
+    
     button:hover {
       background-color: #ffd700;
     }
   </style>
 </head>
+
+<body class="m-4">
+  <h1>Ubah To-Do List</h1>
+  
+  <form class="mb-3" id="form-ubah">
+    <div class="mb-3">
+      <label class="form-label" for="input-tugas">Tugas</label>
+      <input type="text" class="form-control" id="input-tugas" name="tugas" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="input-status">Status</label>
+      <select class="form-control" id="input-status" name="status" required>
+        <option value="Belum Dikerjakan">Belum Dikerjakan</option>
+        <option value="Sudah Dikerjakan">Sudah Dikerjakan</option>
+        <option value="Selesai">Selesai</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="input-prioritas">Prioritas</label>
+      <select class="form-control" id="input-prioritas" name="prioritas" required>
+        <option value="Tinggi">Tinggi🌷</option>
+        <option value="Sedang">Sedang🌹</option>
+        <option value="Rendah">Rendah🌻</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="input-tanggal">Tanggal</label>
+      <input type="date" class="form-control" id="input-tanggal" name="tanggal" required>
+    </div>
+    <button type="button" class="btn btn-primary" id="tombol-ubah">Ubah</button>
+  </form>
