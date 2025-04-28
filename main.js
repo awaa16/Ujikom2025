@@ -28,20 +28,20 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export async function ambildaftartodolist() {
-    const refDokumen = collection(db, "todolist");
-    const kueri = query(refDokumen, orderBy("nama"));
-    const cuplikanKueri = await getDocs(kueri);
-    let hasil = [];
-    cuplikanKueri.forEach((dok) => {
-      hasil.push({
-        id: dok.id,
-        nama: dok.data().nama,
-        prioritas: dok.data().prioritas,
-        status: dok.data().status,
-        tanggal: dok.data().tanggal,
-      });
+  const refDokumen = collection(db, "todolist");
+  const kueri = query(refDokumen, orderBy("nama"));
+  const cuplikanKueri = await getDocs(kueri);
+  let hasil = [];
+  cuplikanKueri.forEach((dok) => {
+    hasil.push({
+      id: dok.id,
+      nama: dok.data().nama,
+      prioritas: dok.data().prioritas,
+      status: dok.data().status,
+      tanggal: dok.data().tanggal,
     });
-    return hasil;
+  });
+  return hasil;
 }
 
 export async function tambahtodolist(nama, prioritas, tanggal, status = false) {
@@ -75,10 +75,17 @@ export async function updateStatus(docId, status) {
 // Fungsi untuk memperbarui seluruh data
 
 export async function ubahtodolist(docId, nama, prioritas, tanggal, status) {
-
-  try {
-
-    // Validasi status sebelum memperbarui
-    const docRef = doc(db, "todolist", docId);
-    const docSnap = await getDoc(docRef)
-;
+    
+    try {
+      
+      // Validasi status sebelum memperbarui
+      const docRef = doc(db, "todolist", docId);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const dataLama = docSnap.data();
+        
+        // Cegah perubahan langsung dari "Belum Dikerjakan" ke "Selesai"
+        if (dataLama.status === "Belum Dikerjakan" && status === "Selesai") {
+          console.error("Status tidak dapat langsung diubah ke 'Selesai' dari 'Belum Dikerjakan'.");
+          return;
+        }
