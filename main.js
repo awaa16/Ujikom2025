@@ -94,3 +94,13 @@ export async function ubahtodolist(docId, nama, prioritas, tanggal, status) {
           status = dataLama.status;
         }
       }
+          // Perbarui dokumen
+
+    await updateDoc(docRef, {
+
+      nama: nama,
+      prioritas: prioritas,
+      tanggal: tanggal,
+      status: status
+    })
+;
