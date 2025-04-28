@@ -195,6 +195,7 @@
         alert('Gagal memperbarui status. Pastikan ID dokumen benar dan ada di database.');
       }
     }
+    
     function resetForm() {
       $('#taskInput').val('');
       $('#dateInput').val('');
@@ -204,44 +205,53 @@
       editDocId = null;
     }
     
-async function tampilkanTodolist() {
-  const todolist = await ambildaftartodolist();
-  
-  const taskBody = $('#taskBody');
-  const completedBody = $('#completedBody');
-  taskBody.empty();
-  completedBody.empty();
-  
-  todolist.forEach(item => {
-    const tr = $('<tr></tr>').css('background-color', '#003366').css('color', '#fff');
-    tr.data('id', item.id);
-    
-    const tdNama = $('<td></td>').text(item.nama).css('padding', '10px');
-    const tdPrioritas = $('<td></td>').text(item.prioritas).css('padding', '10px');
-    const tdStatus = $('<td></td>').css('padding', '10px');
-    const tdTanggal = $('<td></td>').text(item.tanggal).css('padding', '10px');
-    const tdAksi = $('<td></td>').css('padding', '10px');
-    
-    const select = $('<select></select>').addClass('status');
-    select.append($('<option></option>').val('Belum Dikerjakan').text('Belum Dikerjakan'));
-    select.append($('<option></option>').val('Selesai').text('Selesai'));
-    select.val(item.status ? 'Selesai' : 'Belum Dikerjakan'); // set default
-    select.on('change', function() {
-      updateStatus(this);
-    });
-    tdStatus.append(select);
-    
-    const editButton = $('<button></button>').text('Ubah').attr('onclick', `editTask(this, '${item.id}')`);
-    const deleteButton = $('<button></button>').text('Hapus').attr('onclick', `deleteTask(this, '${item.id}')`);
-    tdAksi.append(editButton, deleteButton);
-    
-    tr.append(tdNama, tdPrioritas, tdStatus, tdTanggal, tdAksi);
-    
-    if (item.status) {
-      completedBody.append(tr);
-    } else {
-      taskBody.append(tr);
+    async function tampilkanTodolist() {
+      const todolist = await ambildaftartodolist();
+      
+      const taskBody = $('#taskBody');
+      const completedBody = $('#completedBody');
+      taskBody.empty();
+      completedBody.empty();
+      
+      todolist.forEach(item => {
+        const tr = $('<tr></tr>').css('background-color', '#003366').css('color', '#fff');
+        tr.data('id', item.id);
+        
+        const tdNama = $('<td></td>').text(item.nama).css('padding', '10px');
+        const tdPrioritas = $('<td></td>').text(item.prioritas).css('padding', '10px');
+        const tdStatus = $('<td></td>').css('padding', '10px');
+        const tdTanggal = $('<td></td>').text(item.tanggal).css('padding', '10px');
+        const tdAksi = $('<td></td>').css('padding', '10px');
+        
+        const select = $('<select></select>').addClass('status');
+        select.append($('<option></option>').val('Belum Dikerjakan').text('Belum Dikerjakan'));
+        select.append($('<option></option>').val('Selesai').text('Selesai'));
+        select.val(item.status ? 'Selesai' : 'Belum Dikerjakan'); // set default
+        select.on('change', function() {
+          updateStatus(this);
+        });
+        tdStatus.append(select);
+        
+        const editButton = $('<button></button>').text('Ubah').attr('onclick', `editTask(this, '${item.id}')`);
+        const deleteButton = $('<button></button>').text('Hapus').attr('onclick', `deleteTask(this, '${item.id}')`);
+        tdAksi.append(editButton, deleteButton);
+        
+        tr.append(tdNama, tdPrioritas, tdStatus, tdTanggal, tdAksi);
+        
+        if (item.status) {
+          completedBody.append(tr);
+        } else {
+          taskBody.append(tr);
+        }
+      });
     }
-  });
-}
-    
+    window.deleteTask = async function(button, docId) {
+      if (confirm('Apakah Anda yakin ingin menghapus tugas ini?')) {
+        try {
+          await hapustodolist(docId);
+          tampilkanTodolist(); // Memperbarui tampilan setelah menghapus tugas
+        } catch (error) {
+          console.error('Gagal menghapus tugas:', error);
+        }
+      }
+    };
