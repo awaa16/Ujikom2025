@@ -255,3 +255,22 @@
         }
       }
     };
+    window.onload = tampilkanTodolist;
+    
+    
+    
+    $('#tambah').on('click', function(e) {
+      e.preventDefault();
+      addTask();
+    });
+    
+    window.editTask = editTask;
+    window.addTask = addTask;
+    window.updateStatus = updateStatus;
+    window.resetForm = resetForm;
+    window.tampilkanTodolist = tampilkanTodolist;
+  </script>
+  
+</body>
+
+</html>
