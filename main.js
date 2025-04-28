@@ -74,4 +74,11 @@ export async function updateStatus(docId, status) {
 }
 // Fungsi untuk memperbarui seluruh data
 
-export async function ubahtodolist(docId, nama, prioritas, tanggal, status) 
+export async function ubahtodolist(docId, nama, prioritas, tanggal, status) {
+
+  try {
+
+    // Validasi status sebelum memperbarui
+    const docRef = doc(db, "todolist", docId);
+    const docSnap = await getDoc(docRef)
+;
