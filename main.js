@@ -57,3 +57,18 @@ export async function tambahtodolist(nama, prioritas, tanggal, status = false) {
     console.log('Gagal menambah todolist ' + e);
   }
 }
+export async function hapustodolist(docid) {
+  await deleteDoc(doc(db, "todolist", docid));
+}
+
+// Fungsi untuk memperbarui status saja
+export async function updateStatus(docId, status) {
+  try {
+    await updateDoc(doc(db, "todolist", docId), {
+      status: status
+    });
+    console.log(`Status berhasil diperbarui untuk docId: ${docId}`);
+  } catch (error) {
+    console.error(`Gagal memperbarui status: ${error}`);
+  }
+}
