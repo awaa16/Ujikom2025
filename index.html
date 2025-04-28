@@ -85,3 +85,23 @@
       <th style="padding: 10px; border-bottom: 1px solid #fff;">Aksi</th>
     </tr>
   </thead>
+    <tbody id="taskBody">
+
+    <tr>
+
+      <td>Nama Tugas</td>
+      <td>Prioritas</td>
+      <td>
+        <select class="status">
+          <option value="Belum Dikerjakan">Belum Dikerjakan</option>
+          <option value="Selesai">Selesai</option>
+        </select>
+      </td>
+      <td>Tanggal</td>
+      <td>
+        <button onclick="editTask(this, 'docId')">Ubah</button>
+        <button onclick="deleteTask(this, 'docId')">Hapus</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
