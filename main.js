@@ -89,3 +89,8 @@ export async function ubahtodolist(docId, nama, prioritas, tanggal, status) {
           console.error("Status tidak dapat langsung diubah ke 'Selesai' dari 'Belum Dikerjakan'.");
           return;
         }
+        // Jika status tidak diubah, gunakan status lama
+        if (status === "" || status === dataLama.status) {
+          status = dataLama.status;
+        }
+      }
