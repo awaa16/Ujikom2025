@@ -73,3 +73,66 @@
     </div>
     <button type="button" class="btn btn-primary" id="tombol-ubah">Ubah</button>
   </form>
+  <script type="module">
+    import { ambiltodolist, ubahtodolist } from './main.js';
+    
+    const tombolUbah = document.getElementById('tombol-ubah');
+    const elemenTugas = document.getElementById('input-tugas');
+    const elemenStatus = document.getElementById('input-status');
+    const elemenPrioritas = document.getElementById('input-prioritas');
+    const elemenTanggal = document.getElementById('input-tanggal');
+    
+    const queryString = window.location.search;
+    const parameterURL = new URLSearchParams(queryString);
+    const docId = parameterURL.get('docId');
+    const nama = parameterURL.get('nama');
+    const prioritas = parameterURL.get('prioritas');
+    const tanggal = parameterURL.get('tanggal');
+    const status = parameterURL.get('status');
+    
+    // Set nilai awal elemen berdasarkan parameter URL
+    elemenTugas.value = nama || '';
+    elemenStatus.value = status || 'Belum Dikerjakan';
+    elemenPrioritas.value = prioritas || 'Sedang';
+    elemenTanggal.value = tanggal || '';
+    
+    tombolUbah.addEventListener('click', async function(e) {
+      e.preventDefault();
+      
+      // Validasi input
+      if (!elemenTugas.value || !elemenTanggal.value) {
+        alert('Semua field harus diisi!');
+        return;
+      }
+      
+      // Ambil nilai status baru dari elemen input
+      const statusInput = elemenStatus.value;
+      
+      // Tetapkan status ke default jika tidak diubah
+      let statusBaru = status; // Default ke status lama
+      if (statusInput !== status && statusInput !== "") {
+        statusBaru = statusInput; // Perbarui hanya jika diubah
+      }
+      
+      // Pastikan status tidak berubah otomatis ke "Selesai"
+      if (status === "Belum Dikerjakan" && statusBaru === "Selesai") {
+        alert("Status tidak dapat langsung diubah ke 'Selesai' dari 'Belum Dikerjakan'.");
+        return;
+      }
+      
+      // Panggil fungsi ubah
+      await ubahtodolist(
+        docId,
+        elemenTugas.value,
+        elemenPrioritas.value,
+        elemenTanggal.value,
+        statusBaru // Gunakan status yang diperiksa
+      );
+      
+      // Redirect ke halaman utama
+      window.location.href = 'index.html';
+    });
+  </script>
+</body>
+
+</html>
